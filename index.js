@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const Card = require("./models/card");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
 
