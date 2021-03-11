@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const generatePassword = require("password-generator");
+const Card = require("./models/card");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -31,6 +31,34 @@ app.get("/get-data", (req, res) => {
       res.send(card);
     }
   });
+});
+
+app.post("/post-data", (req, res) => {
+  console.log("/ post requested...");
+  let data = req.body.columns,
+    newData = [];
+  Card.remove({}, (err, cnt) => {
+    console.log(cnt);
+  });
+  console.log(data);
+  data.map((outer) => {
+    outer.cards.map((inner) => {
+      newData.push(
+        Card({
+          title: inner.title,
+          description: inner.description,
+          category: outer.title,
+        })
+      );
+      return null;
+    });
+    return null;
+  });
+  newData.forEach((item) => {
+    item.save();
+  });
+
+  res.send("success..");
 });
 
 // The "catchall" handler: for any request that doesn't
