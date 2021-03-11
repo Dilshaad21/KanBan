@@ -21,18 +21,16 @@ mongoose.connection.once("open", () => {
 app.use(express.static(path.join(__dirname, "client/build")));
 
 // Put all API endpoints under '/api'
-app.get("/api/passwords", (req, res) => {
-  const count = 5;
+app.get("/get-data", (req, res) => {
+  console.log("/ get request");
 
-  // Generate some passwords
-  const passwords = Array.from(Array(count).keys()).map((i) =>
-    generatePassword(12, false)
-  );
-
-  // Return them as json
-  res.json(passwords);
-
-  console.log(`Sent ${count} passwords`);
+  Card.find((err, card) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(card);
+    }
+  });
 });
 
 // The "catchall" handler: for any request that doesn't
