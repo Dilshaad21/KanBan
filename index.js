@@ -20,6 +20,8 @@ mongoose.connection.once("open", () => {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
 
+app.use(bodyParser.json());
+
 // Put all API endpoints under '/api'
 app.get("/get-data", (req, res) => {
   console.log("/ get request");
